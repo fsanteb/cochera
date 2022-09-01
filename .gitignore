@@ -1,0 +1,10 @@
+application/config/
+application/config/database.php
+application/config/config.php
+application/config/routes.php
+system/
+vendor/
+composer.json
+contributing.md
+readme.rst
+web.config

@@ -1,0 +1,8 @@
+[04-May-2022 12:46:23 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ugelcom/public_html/metalikas/vendor/markbaker/complex/classes/src/operations/add.php on line 18
+[04-May-2022 12:46:26 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ugelcom/public_html/metalikas/vendor/markbaker/complex/classes/src/operations/add.php on line 18
+[04-May-2022 12:46:33 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ugelcom/public_html/metalikas/vendor/markbaker/complex/classes/src/operations/add.php on line 18
+[04-May-2022 12:46:51] PHP Parse error:  syntax error, unexpected T_CONST in /home/ugelcom/public_html/metalikas/system/core/CodeIgniter.php on line 58
+[04-May-2022 12:46:59] PHP Parse error:  syntax error, unexpected T_CONST in /home/ugelcom/public_html/metalikas/system/core/CodeIgniter.php on line 58
+[04-May-2022 12:47:23 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or T_VARIABLE in /home/ugelcom/public_html/metalikas/vendor/markbaker/complex/classes/src/operations/add.php on line 18
+[04-May-2022 08:47:42] PHP Parse error:  syntax error, unexpected T_CONST in /home/ugelcom/public_html/metalikas/system/core/CodeIgniter.php on line 58
+[04-May-2022 12:48:05 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/ugelcom/public_html/metalikas/vendor/markbaker/complex/classes/src/operations/add.php on line 18
