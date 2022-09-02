@@ -12,8 +12,13 @@ class Login extends CI_Controller {
 	}
 
 
-	public function index(){
-		$this->load->view('login/login'); 
+	public function index($i=null){
+		if($i==""){
+			$this->load->view('login/login'); 
+		}else{
+			$this->load->view('login/login2'); 
+		}
+		
 	}
 	
 	public function ingresar()
