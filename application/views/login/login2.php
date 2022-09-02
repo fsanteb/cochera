@@ -23,9 +23,9 @@
 				<input type="password" id="Password" name="Password" placeholder="Contraseña">
         <center><span role="alert" id="resultado" style="color:red;"></span></center><br>
 				<input type="submit" value="Ingresar" name="login" id="submit">
-
-				<a href="#">Lost your password?</a><br>
-				<a href="#">dont have account?</a>
+        <center>
+				<a href="#">Olvidate tu contraseña?</a><br>
+				<a href="#">¿No tienes cuenta?</a></center>
 
 			</form>
 		</div>
