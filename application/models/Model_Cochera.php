@@ -17,36 +17,36 @@ class Model_Cochera extends CI_Model {
         return $query;
     }
 
-    function valida_banco($dato){
+    function valida_tipovehiculo($dato){
         $v="";
         if($dato['mod']==2){
-        $v=" and id_banco!='".$dato['id_banco']."'";
+        $v=" and id_tipo!='".$dato['id_tipo']."'";
         }
-        $sql = "SELECT * from banco where estado=1 and cod_banco='".$dato['cod_banco']."' and nom_banco='".$dato['nom_banco']."' $v";
+        $sql = "SELECT * from tipo_vehiculo where estado=1 and nom_tipo='".$dato['nom_tipo']."' and precio_abonado='".$dato['precio_abonado']."' and precio_noabonado='".$dato['precio_noabonado']."' $v";
         
         $query = $this->db->query($sql)->result_Array();
         return $query;
     }
 
-    function insert_banco($dato){
+    function insert_tipovehiculo($dato){
         $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
     
-        $sql="INSERT into banco (cod_banco,nom_banco, estado,fec_reg, user_reg ) 
-        values ('".$dato['cod_banco']."','".$dato['nom_banco']."', 1,NOW(),".$id_usuario.")";
+        $sql="INSERT into tipo_vehiculo (nom_tipo,precio_abonado,precio_noabonado, estado,fec_reg, user_reg ) 
+        values ('".$dato['nom_tipo']."','".$dato['precio_abonado']."','".$dato['precio_noabonado']."', 1,NOW(),".$id_usuario.")";
         $this->db->query($sql);
     }
     
-    function update_banco($dato){
+    function update_tipovehiculo($dato){
         $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
     
-        $sql="UPDATE banco set cod_banco='".$dato['cod_banco']."',nom_banco='".$dato['nom_banco']."',fec_act=NOW(), user_act=".$id_usuario." where id_banco='".$dato['id_banco']."'";
+        $sql="UPDATE tipo_vehiculo set nom_tipo='".$dato['nom_tipo']."',precio_abonado='".$dato['precio_abonado']."',precio_noabonado='".$dato['precio_noabonado']."',fec_act=NOW(), user_act=".$id_usuario." where id_tipo='".$dato['id_tipo']."'";
         $this->db->query($sql);
     }
 
-    function delete_banco($dato){
+    function delete_tipovehiculo($dato){
         $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
     
-        $sql="UPDATE banco set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_banco='".$dato['id_banco']."'";
+        $sql="UPDATE tipo_vehiculo set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_tipo='".$dato['id_tipo']."'";
         $this->db->query($sql);
     }
 

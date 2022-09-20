@@ -74,7 +74,7 @@
     //---------------------------------------------------AREA--------------------------------------------------
     function Insert_Tipo_Vehiculo(){
         var dataString = new FormData(document.getElementById('formulario_tvehiculo'));
-        var url="<?php echo site_url(); ?>Kasnet/Insert_Tipo_Vehiculo";
+        var url="<?php echo site_url(); ?>Cochera/Insert_Tipo_Vehiculo";
         //alert(url);
         if (Valida_Tipo_Vehiculo('1')) {
             $.ajax({
@@ -141,8 +141,8 @@
     }
 
     function Update_Tipo_Vehiculo(){
-        var dataString = new FormData(document.getElementById('formulario_bancoe'));
-        var url="<?php echo site_url(); ?>Kasnet/Update_Tipo_Vehiculo";
+        var dataString = new FormData(document.getElementById('formulario_tvehiculoe'));
+        var url="<?php echo site_url(); ?>Cochera/Update_Tipo_Vehiculo";
         if (Valida_Tipo_Vehiculo('2')) {
             $.ajax({
                 type:"POST",
@@ -164,11 +164,10 @@
                         '',
                         'success'
                     ).then(function() {
-                        window.location = "<?php echo site_url(); ?>Cochera/Tipo_Vehiculo";
+                        window.location.reload();
                         
                     });  
                     }
-                    
                 }
             });
         }    
@@ -186,7 +185,7 @@
 
     function Delete_Tipo_Vehiculo(id){
         var id = id;
-        var url="<?php echo site_url(); ?>Kasnet/Delete_Tipo_Vehiculo";
+        var url="<?php echo site_url(); ?>Cochera/Delete_Tipo_Vehiculo";
         const swalWithBootstrapButtons = swal.mixin({
             confirmButtonClass: 'btn btn-success btn-rounded',
             cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
@@ -207,14 +206,14 @@
                 $.ajax({
                     type:"POST",
                     url: url,
-                    data: {'id_banco':id},
+                    data: {'id_tipo':id},
                     success:function () {
                         Swal(
                             'Eliminado!',
                             'El registro ha sido eliminado satisfactoriamente.',
                             'success'
                         ).then(function() {
-                            window.location = "<?php echo site_url(); ?>Cochera/Tipo_Vehiculo";
+                            window.location.reload();
                         });
                     }
                 });
