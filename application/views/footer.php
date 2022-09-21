@@ -24,6 +24,11 @@
     <script src="<?= base_url() ?>template/assets/js/custom.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
+    <script src="<?= base_url() ?>template/plugins/dropify/dropify.min.js"></script>
+    <script src="<?= base_url() ?>template/plugins/blockui/jquery.blockUI.min.js"></script>
+    <!-- <script src="plugins/tagInput/tags-input.js"></script> -->
+    <script src="<?= base_url() ?>template/assets/js/users/account-settings.js"></script>
+
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="<?= base_url() ?>template/plugins/apex/apexcharts.min.js"></script>
     <script src="<?= base_url() ?>template/assets/js/dashboard/dash_1.js"></script>

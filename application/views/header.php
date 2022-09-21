@@ -15,11 +15,15 @@
     <link href="<?= base_url() ?>template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>template/assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="<?= base_url() ?>template/assets/css/users/user-profile.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>template/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="<?= base_url() ?>template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>template/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" class="dashboard-analytics" />
 
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/dropify/dropify.min.css">
+    <link href="<?= base_url() ?>template/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
+    
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/table/datatable/dt-global_style.css">
     <link href="<?= base_url() ?>template/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
