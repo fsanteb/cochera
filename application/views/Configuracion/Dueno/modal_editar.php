@@ -12,13 +12,13 @@
                 <label class="col-sm-3 control-label text-bold">Usuario: </label>
             </div>
             <div class="form-group col-sm-4">
-                <input type="text" class="form-control" id="num_doce" name="num_doce" value="<?php echo $get_id[0]['num_doc'] ?>" placeholder="Ingresar Nombre" autofocus>
+                <input type="text" class="form-control" id="num_doce" name="num_doce" value="<?php echo $get_id[0]['num_doc'] ?>" placeholder="Ingresar Usuario" autofocus>
             </div>
             <div class="form-group col-md-2">
                 <label class="col-sm-3 control-label text-bold">Contraseña:</label>
             </div>
             <div class="form-group col-sm-4">
-                <input type="text" class="form-control" id="passworde" name="passworde" onkeypress="return soloNumeros(event)" placeholder="Ingresar Precio" autofocus>
+                <input type="text" class="form-control" id="passworde" name="passworde" onkeypress="return soloNumeros(event)" placeholder="Ingresar Contraseña" autofocus>
             </div>
         </div>
     </div>
