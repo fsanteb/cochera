@@ -422,4 +422,52 @@ class Model_Cochera extends CI_Model {
         $this->db->query($sql);
     }
 
+    //-------------------COLOR-------------------//
+    function get_list_color($id_color=null){
+        if(isset($id_color) && $id_color > 0){
+            $sql = "SELECT * from color where id_color =".$id_color;
+        }
+        else
+        {
+            $sql = "SELECT * from color where estado=1";
+        }
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function valida_color($dato){
+        $v="";
+        if($dato['mod']==2){
+        $v=" and id_color!='".$dato['id_color']."'";
+        }
+        $sql = "SELECT * from color where estado=1 and nom_color='".$dato['nom_color']."' $v";
+        
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function insert_color($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="INSERT into color (nom_color, estado,fec_reg, user_reg ) 
+        values ('".$dato['nom_color']."', 1,NOW(),".$id_usuario.")";
+        $this->db->query($sql);
+    }
+    
+    function update_color($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="UPDATE color set nom_color='".$dato['nom_color']."',fec_act=NOW(), user_act=".$id_usuario." where id_color='".$dato['id_color']."'";
+       
+        $this->db->query($sql);
+    }
+
+    function delete_color($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="UPDATE color set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_color='".$dato['id_color']."'";
+
+        $this->db->query($sql);
+    }
+
 }

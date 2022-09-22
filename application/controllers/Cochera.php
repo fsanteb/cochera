@@ -235,6 +235,71 @@ class Cochera extends CI_Controller {
             $this->load->view('Configuracion/Modelo/modal_editar',$dato);
     }
 
+
+    //----------------------Color-----------------------//
+
+    public function Color() {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['list_color'] = $this->Model_Cochera->get_list_color();
+        $this->load->view('Configuracion/Color/index', $dato);
+    }
+
+    public function Modal_Color() {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $this->load->view('Configuracion/Color/modal_registrar');
+    }
+
+    public function Insert_Color(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['nom_color']= $this->input->post("nom_color");
+        $dato['mod']=1;
+        $total=count($this->Model_Cochera->valida_color($dato));
+        if($total>0){
+            echo "error";
+        }
+        else{
+            $this->Model_Cochera->insert_color($dato);
+        }
+    }
+
+    public function Update_Color(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_color']= $this->input->post("id_color");
+        $dato['nom_color']= $this->input->post("nom_colore");
+        $dato['mod']=2;
+        $total=count($this->Model_Cochera->valida_color($dato));
+        if($total>0){
+            echo "error";
+        }else{
+            $this->Model_Cochera->update_color($dato);
+        }
+    }
+
+    public function Delete_Color(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_color']= $this->input->post("id_color");
+        $this->Model_Cochera->delete_color($dato);
+        
+    }
+
+    public function Modal_Update_Color($id_color) {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['get_id'] = $this->Model_Cochera->get_list_color($id_color);
+        $this->load->view('Configuracion/Color/modal_editar',$dato);
+    }
+
     //--------DUEÑO
     public function Dueno() {
         if (!$this->session->userdata('usuario')) {
