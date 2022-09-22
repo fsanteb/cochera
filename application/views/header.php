@@ -15,11 +15,15 @@
     <link href="<?= base_url() ?>template/assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>template/assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <link href="<?= base_url() ?>template/assets/css/users/user-profile.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url() ?>template/plugins/animate/animate.css" rel="stylesheet" type="text/css" />
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <link href="<?= base_url() ?>template/plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url() ?>template/assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" class="dashboard-analytics" />
 
+    <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/dropify/dropify.min.css">
+    <link href="<?= base_url() ?>template/assets/css/users/account-setting.css" rel="stylesheet" type="text/css" />
+    
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/table/datatable/datatables.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>template/plugins/table/datatable/dt-global_style.css">
     <link href="<?= base_url() ?>template/assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
@@ -207,7 +211,7 @@
                     <div class="dropdown-menu position-absolute animated fadeInUp" aria-labelledby="userProfileDropdown">
                         <div class="user-profile-section">
                             <div class="media mx-auto">
-                                <img src="<?= base_url() ?>template/assets/img/90x90.jpg" class="img-fluid mr-2" alt="avatar">
+                                <img src="<?php if($_SESSION['usuario'][0]['foto']!=""){echo $_SESSION['usuario'][0]['foto'];}else{echo base_url()."template/assets/img/90x90.jpg";}?>" class="img-fluid mr-2" alt="avatar">
                                 <div class="media-body">
                                     <h5><?php echo $_SESSION['usuario'][0]['usuario_nombres']; ?></h5>
                                     <p><?php echo $_SESSION['usuario'][0]['nom_nivel']; ?></p>
@@ -215,7 +219,7 @@
                             </div>
                         </div>
                         <div class="dropdown-item">
-                            <a href="#">
+                            <a href="<?= site_url('Cochera/Perfil') ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> <span>Mi Perfil</span>
                             </a>
                         </div>
