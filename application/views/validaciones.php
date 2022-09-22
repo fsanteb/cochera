@@ -638,7 +638,7 @@
             })
             return false;
         }
-        if($('#num_doc').val().trim() === '') {
+        if($('#num_doc').val().trim() == '') {
             swal({
                 title: 'Debe ingresar N° Documento',
                 animation: false,
@@ -647,6 +647,7 @@
             })
             return false;
         }
+        return true;
     }
     //---------------------------------------------------Modelo--------------------------------------------------
 
@@ -847,6 +848,153 @@
                     type:"POST",
                     url: url,
                     data: {'id_modelo':id},
+                    success:function () {
+                        Swal(
+                            'Eliminado!',
+                            'El registro ha sido eliminado satisfactoriamente.',
+                            'success'
+                        ).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+
+            
+            } else if (
+            result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelado',
+                    'El registro está a salvo :)',
+                    'error'
+                )
+            }
+        });
+
+    }
+
+    function Aprobar_Datos(id,t){
+        $(document)
+        .ajaxStart(function () {
+            $.blockUI({
+                message: '<svg> ... </svg>',
+                fadeIn: 800,
+                overlayCSS: {
+                    backgroundColor: '#1b2024',
+                    opacity: 0.8,
+                    zIndex: 1200,
+                    cursor: 'wait'
+                },
+                css: {
+                    border: 0,
+                    color: '#fff',
+                    zIndex: 1201,
+                    padding: 0,
+                    backgroundColor: 'transparent'
+                }
+            });
+        })
+        .ajaxStop(function () {
+            $.blockUI({
+                message: '<svg> ... </svg>',
+                fadeIn: 800,
+                timeout: 100,
+                overlayCSS: {
+                    backgroundColor: '#1b2024',
+                    opacity: 0.8,
+                    zIndex: 1200,
+                    cursor: 'wait'
+                },
+                css: {
+                    border: 0,
+                    color: '#fff',
+                    zIndex: 1201,
+                    padding: 0,
+                    backgroundColor: 'transparent'
+                }
+            });
+        });
+
+        if(t==1){
+            titulo="¿Realmente desea aprobar los datos del usuario?";
+            msg="aprobar";
+            msg2="Aprobado";
+        }else{
+            titulo="¿Realmente desea rechazar los datos del usuario?";
+            msg="rechazar";
+            msg2="Rechazado";
+        }
+        
+        var url="<?php echo site_url(); ?>Cochera/Aprobar_Datos";
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: titulo,
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, '+msg+'!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {'id_usuario':id,'t':t},
+                    success:function () {
+                        Swal(
+                            msg2+'!',
+                            'El registro ha sido actualizazdo satisfactoriamente.',
+                            'success'
+                        ).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+
+            
+            } else if (
+            result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelado',
+                    'El registro está a salvo :)',
+                    'error'
+                )
+            }
+        });
+    }
+
+    function Delete_Dueno(id){
+        var id = id;
+        var url="<?php echo site_url(); ?>Cochera/Delete_Dueno";
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: '¿Realmente desea eliminar el registro?',
+            text: "El registro será eliminado permanentemente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {'id_usuario':id},
                     success:function () {
                         Swal(
                             'Eliminado!',

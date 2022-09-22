@@ -89,6 +89,7 @@ class Model_Cochera extends CI_Model {
                 (case when u.num_celp!='' then 1 else 0 end) as num_celpp,
                 (case when u.foto!='' then 1 else 0 end) as fotop,
                 u.usuario_email
+                
                 from users u
                 left join tipo_documento td on td.id_tipo_documento=u.id_tipo_documento
                 LEFT JOIN nacionalidad n on n.id_nacionalidad=u.id_nacionalidad
@@ -96,7 +97,7 @@ class Model_Cochera extends CI_Model {
         }
         else{
             $sql = "SELECT u.id_usuario, u.usuario_apater, td.cod_tipo_documento,
-                u.num_celp,u.num_doc, u.usuario_amater, u.usuario_nombres, n.nom_nacionalidad, 
+                u.num_celp,u.num_doc, u.usuario_amater, u.usuario_nombres, n.nom_nacionalidad,u.flag,
                 u.foto, EXTRACT(DAY FROM u.fec_nac) AS dia,case month(u.fec_nac) 
                 WHEN 1 THEN 'Enero'
                 WHEN 2 THEN 'Febrero'
@@ -122,7 +123,10 @@ class Model_Cochera extends CI_Model {
                 (case when u.emailp!='' then 1 else 0 end) as emailpp,
                 (case when u.num_celp!='' then 1 else 0 end) as num_celpp,
                 (case when u.foto!='' then 1 else 0 end) as fotop,
-                u.usuario_email
+                u.usuario_email,
+                case when u.flag=1 then 'Aprobado'
+                when u.flag=2 then 'Rechazado'
+                else 'Pendiente Aprobación' end as estado_datos
                 from users u
                 left join tipo_documento td on td.id_tipo_documento=u.id_tipo_documento
                 LEFT JOIN nacionalidad n on n.id_nacionalidad=u.id_nacionalidad
@@ -406,6 +410,14 @@ class Model_Cochera extends CI_Model {
         $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
     
         $sql="UPDATE modelo set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_modelo='".$dato['id_modelo']."'";
+
+        $this->db->query($sql);
+    }
+
+    function aprobar_datos($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="UPDATE users set flag='".$dato['t']."',fec_act=NOW(), user_act=".$id_usuario." where id_usuario='".$dato['id_usuario']."'";
 
         $this->db->query($sql);
     }

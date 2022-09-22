@@ -292,7 +292,7 @@ class Cochera extends CI_Controller {
         if (!$this->session->userdata('usuario')) {
             redirect(base_url());
         }
-        $dato['id_tipo']= $this->input->post("id_tipo");
+        $dato['id_usuario']= $this->input->post("id_usuario");
         $this->Model_Cochera->delete_dueno($dato);
         
     }
@@ -432,6 +432,18 @@ class Cochera extends CI_Controller {
             $this->load->view('Configuracion/Perfil/distrito', $dato);
         }else{
             redirect('');
+        }
+    }
+
+    public function Aprobar_Datos(){
+        if($this->session->userdata('usuario')) {
+
+            $dato['id_usuario'] = $this->input->post("id_usuario");
+            $dato['t']= $this->input->post("t");
+            $this->Model_Cochera->aprobar_datos($dato);
+        }else{
+            redirect('');
+        
         }
     }
 

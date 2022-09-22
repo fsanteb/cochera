@@ -271,23 +271,17 @@
             </div>
         </div>
     </div>    
-<?php $this->load->view('validaciones'); ?>                         
+                      
 <script>
     $(document).ready(function() {
         $("#liconfiguracion").addClass('active');
         $("#dueno").addClass('active');
     }); 
 </script>
+<?php $this->load->view('validaciones'); ?>   
 <?php $this->load->view('footer'); ?>
 <script>
     calcularEdad();
-    Validag();
-    ValidaA();
-    Validasp();
-    Validaeb();
-    $(".proyectosd").select2({
-        tags: true
-    });
 
     function validar_Archivo(v){
         var archivoInput = document.getElementById(v);

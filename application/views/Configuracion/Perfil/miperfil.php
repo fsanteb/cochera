@@ -24,6 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="widget-content widget-content-area">
                         <div class="d-flex justify-content-between">
                             <h3 class="">Información</h3>
+                            <?php if($sesion['id_nivel']=="1"){ ?>
+                                <a type="button" class="btn btn-primary mt-2" href="<?= site_url('Cochera/Dueno') ?>">Regresar</a> 
+                                <?php } ?>
+                                
                             <?php $datos_porcentaje=round((($get_id[0]['nombres']+$get_id[0]['apater']+$get_id[0]['amater']+$get_id[0]['nacionalidadp']+$get_id[0]['tipo_documento']+$get_id[0]['num_docp']+$get_id[0]['fec_nac']+$get_id[0]['estado_civil']+$get_id[0]['emailpp']+$get_id[0]['num_celpp']+$get_id[0]['fotop'])/11)*100,2); ?>
                             <?php if($get_id[0]['flag']==1){?>
                                 <span class="mt-2 badge badge-success">Datos Aprobados</span>
