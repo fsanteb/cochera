@@ -1166,4 +1166,211 @@
 
     }
 
+
+    //---------------------------------------------------Vehiculo--------------------------------------------------
+
+    function Insert_Vehiculo(){
+        //alert("dbd");
+        var dataString = new FormData(document.getElementById('formulario_vehiculo'));
+        var url="<?php echo site_url(); ?>Cochera/Insert_Vehiculo";
+        
+        if (Valida_Vehiculo('1')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Registro Denegado!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                       swal.fire(
+                        'Registro Exitoso!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location = "<?php echo site_url(); ?>Cochera/Vehiculo";
+                    }); 
+                    }
+                }
+            });
+        } 
+    }
+
+    function Valida_Vehiculo(t) {
+
+        v="";
+        if(t==2){
+            v="e";
+        }
+        if($('#placa'+v).val().trim() === '') {
+            swal({
+                title: 'Debe ingresar Placa',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+
+        if($('#id_tipo'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Vehiculo',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+
+        if($('#id_marca'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Marca',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+
+        if($('#id_modelo'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Modelo',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+
+        if($('#id_color'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Color',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+        return true;
+    } 
+
+    function Update_Vehiculo(){
+        var dataString = new FormData(document.getElementById('formulario_colore'));
+        var url="<?php echo site_url(); ?>Cochera/Update_Color";
+        if (Valida_Color('2')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Actualización Denegada!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                      swal.fire(
+                        'Actualización Exitosa!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location.reload();
+                        
+                    });  
+                    }
+                }
+            });
+        }    
+        else{
+            bootbox.alert(msgDate)
+            var input = $(inputFocus).parent();
+            $(input).addClass("has-error");
+            $(input).on("change", function () {
+                if ($(input).hasClass("has-error")) {
+                    $(input).removeClass("has-error");
+                }
+            });
+        }
+    }
+
+    function Delete_Vehiculo(id){
+        var id = id;
+        var url="<?php echo site_url(); ?>Cochera/Delete_Color";
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: '¿Realmente desea eliminar el registro?',
+            text: "El registro será eliminado permanentemente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {'id_color':id},
+                    success:function () {
+                        Swal(
+                            'Eliminado!',
+                            'El registro ha sido eliminado satisfactoriamente.',
+                            'success'
+                        ).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+
+            
+            } else if (
+            result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelado',
+                    'El registro está a salvo :)',
+                    'error'
+                )
+            }
+        });
+
+    }
+
+    function Busca_ModeloV(t){
+        v="";
+        if (t==2){
+            v='e';
+        }
+        var dataString = new FormData(document.getElementById('formulario_vehiculo'+v));
+        var url="<?php echo site_url(); ?>Cochera/Busca_ModeloV/"+t;
+    
+        $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                   $('#cmb_modelo'+v).html(data);
+                }
+            });
+    }
+
 </script>
