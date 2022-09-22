@@ -438,7 +438,7 @@ class Model_Cochera extends CI_Model {
             left join color c on v.id_color=c.id_color
             left join marca m on v.id_marca=m.id_marca
             left join modelo md on v.id_modelo=md.id_modelo
-            left join tipo t on v.id_tipo=t.id_tipo
+            left join tipo_vehiculo t on v.id_tipo=t.id_tipo
             WHERE v.estado=1";
             }
             $query = $this->db->query($sql)->result_Array();
