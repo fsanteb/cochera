@@ -422,4 +422,77 @@ class Model_Cochera extends CI_Model {
         $this->db->query($sql);
     }
 
+    //-------------vehiculo
+    function get_list_vehiculo($id_vehiculo=null){
+        if(isset($id_vehiculo) && $id_vehiculo > 0){
+            $sql = "SELECT v.*,c.nom_color,m.nom_marca,md.nom_modelo FROM vehiculo v 
+            left join color c on v.id_color=c.id_color
+            left join marca m on v.id_marca=m.id_marca
+            left join modelo md on v.id_modelo=md.id_modelo
+            WHERE v.id_vehiculo=$id_vehiculo";
+        }else{
+            $sql = "SELECT v.*,c.nom_color,m.nom_marca,md.nom_modelo,DATE_FORMAT(v.fec_fabricacion,'%d/%m/%Y') as fecha_fabricacion,
+            DATE_FORMAT(v.fec_adquisicion,'%d/%m/%Y') as fecha_adquisicion,t.nom_tipo
+            FROM vehiculo v
+            left join color c on v.id_color=c.id_color
+            left join marca m on v.id_marca=m.id_marca
+            left join modelo md on v.id_modelo=md.id_modelo
+            left join tipo t on v.id_tipo=t.id_tipo
+            WHERE v.estado=1";
+        }
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+    
+    function valida_vehiculo($dato){
+        $condicion="";
+        if($dato['modal']==2){
+            $condicion="AND id_vehiculo!='".$dato['id_vehiculo']."'";
+        }
+        $sql = "SELECT * FROM vehiculo WHERE id_tipo='".$dato['id_tipo']."' and id_empresa='".$dato['id_empresa']."' AND id_modelo='".$dato['id_modelo']."' AND 
+                id_marca='".$dato['id_marca']."' and placa='".$dato['placa']."' AND estado=1 $condicion";
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function get_cant_vehiculo($dato){
+        $sql = "SELECT * from vehiculo where id_empresa='".$dato['id_empresa']."'";
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function insert_vehiculo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        $sql = "INSERT INTO vehiculo (cod_vehiculo,id_tipo,id_modelo,id_empresa,id_marca,
+        placa,pregistro,serie,fec_fabricacion,fec_adquisicion,
+        id_color,nasiento,chasis,nllanta,neje,tuso,
+        estado,fec_reg,user_reg)
+
+                VALUES ('".$dato['cod_vehiculo']."','".$dato['id_tipo']."','".$dato['id_modelo']."','".$dato['id_empresa']."','".$dato['id_marca']."',
+                '".$dato['placa']."','".$dato['pregistro']."','".$dato['serie']."','".$dato['fec_fabricacion']."','".$dato['fec_adquisicion']."',
+                '".$dato['id_color']."','".$dato['nasiento']."','".$dato['chasis']."','".$dato['nllanta']."','".$dato['neje']."','".$dato['tuso']."',
+                1,NOW(),
+                $id_usuario)";
+       $this->db->query($sql);
+    }
+
+    function update_vehiculo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        $sql = "UPDATE vehiculo SET 
+        id_tipo='".$dato['id_tipo']."',id_modelo='".$dato['id_modelo']."',id_empresa='".$dato['id_empresa']."',id_marca='".$dato['id_marca']."',
+        placa='".$dato['placa']."',pregistro='".$dato['pregistro']."',serie='".$dato['serie']."',fec_fabricacion='".$dato['fec_fabricacion']."',fec_adquisicion='".$dato['fec_adquisicion']."',
+        id_color='".$dato['id_color']."',nasiento='".$dato['nasiento']."',chasis='".$dato['chasis']."',nllanta='".$dato['nllanta']."',neje='".$dato['neje']."',tuso='".$dato['tuso']."',
+        fec_act=NOW(),
+                user_act=$id_usuario
+                WHERE id_vehiculo='".$dato['id_vehiculo']."'";
+       $this->db->query($sql);
+    }
+
+    function delete_vehiculo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        $sql = "UPDATE vehiculo SET estado=2,fec_eli=NOW(),user_eli=$id_usuario
+                WHERE id_vehiculo='".$dato['id_vehiculo']."'";
+       $this->db->query($sql);
+    }
+
 }

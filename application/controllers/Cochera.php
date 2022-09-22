@@ -447,5 +447,134 @@ class Cochera extends CI_Controller {
         }
     }
 
-        
+    //------------VEHICULO
+    public function Vehiculo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['list_vehiculo'] = $this->Model_Cochera->get_list_vehiculo();
+            $this->load->view('Configuracion/Vehiculo/index',$dato);
+        }else{
+            redirect('');
+        }
+    }
+
+    public function Modal_Vehiculo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
+            $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipov($id_tipo=null,$dato);
+            $dato['list_color_vehiculo'] = $this->Model_Cochera->get_list_colorv($id_color=null,$dato);
+            $dato['list_marca_vehiculo'] = $this->Model_Cochera->get_list_marcav($id_marca=null,$dato);
+            $this->load->view('Configuracion/Vehiculo/modal_reg',$dato);   
+        }
+        else{
+            redirect('');
+        }
+    }
+
+    public function Insert_Vehiculo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['placa'] =$this->input->post("placa");
+            $dato['pregistro'] =$this->input->post("pregistro");
+            $dato['serie'] =$this->input->post("serie");
+            $dato['fec_fabricacion'] =$this->input->post("fec_fabricacion");
+            $dato['fec_adquisicion'] =$this->input->post("fec_adquisicion");
+            $dato['id_tipo'] =$this->input->post("id_tipo");
+            $dato['id_marca'] =$this->input->post("id_marca");
+            $dato['id_modelo'] =$this->input->post("id_modelo");
+            $dato['id_color'] =$this->input->post("id_color");
+            $dato['nasiento'] =$this->input->post("nasiento");
+            $dato['chasis'] =$this->input->post("chasis");
+            $dato['nllanta'] =$this->input->post("nllanta");
+            $dato['neje'] =$this->input->post("neje");
+            $dato['tuso'] =$this->input->post("tuso");
+            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
+            $dato['modal']= 1;
+            $canti=count($this->Model_Cochera->valida_vehiculo($dato));
+
+            if($canti>0){
+                echo "error";
+            }else{
+                $num = count($this->Model_Cochera->get_cant_vehiculo($dato));
+                $aniof=substr(date('Y'), 2,2);
+                if($num<9){
+                    $codigo="V"."0000".($num+1);
+                }
+                if($num>=9 && $num<99){
+                    $codigo="V"."000".($num+1);
+                }
+                if($num>=99 && $num<999){
+                    $codigo="V"."00".($num+1);
+                }
+                if($num>=999 && $num<9999){
+                    $codigo="V"."0".($num+1);
+                }
+                if($num>9999){
+                    $codigo="V".($num+1);
+                }
+                $dato['cod_vehiculo']= $codigo;
+                $this->Model_Cochera->insert_vehiculo($dato);
+            }
+        }
+        else{
+            redirect('');
+        }        
+    }
+
+    public function Modal_Update_Vehiculo($id_vehiculo){
+        if ($this->session->userdata('usuario')) {
+            $dato['get_id'] = $this->Model_Cochera->get_list_vehiculo($id_vehiculo,$dato=null);
+            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
+            $dato['list_color_vehiculo'] = $this->Model_Cochera->get_list_colorv($id_color=null,$dato);
+            $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipov($id_tipo=null,$dato);
+            $dato['id_tipo'] =$dato['get_id'][0]['id_tipo'];
+            $dato['list_marca_vehiculo'] = $this->Model_Cochera->busca_marcav($dato);
+            $dato['id_marca'] =$dato['get_id'][0]['id_marca'];
+            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($dato);
+            $this->load->view('Configuracion/Vehiculo/modal_upd',$dato);   
+        }
+        else{
+            redirect('');
+        }
+    }
+
+    public function Update_Vehiculo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['id_vehiculo'] =$this->input->post("id_vehiculo");
+            $dato['placa'] =$this->input->post("placae");
+            $dato['pregistro'] =$this->input->post("pregistroe");
+            $dato['serie'] =$this->input->post("seriee");
+            $dato['fec_fabricacion'] =$this->input->post("fec_fabricacione");
+            $dato['fec_adquisicion'] =$this->input->post("fec_adquisicione");
+            $dato['id_tipo'] =$this->input->post("id_tipoe");
+            $dato['id_marca'] =$this->input->post("id_marcae");
+            $dato['id_modelo'] =$this->input->post("id_modeloe");
+            $dato['id_color'] =$this->input->post("id_colore");
+            $dato['nasiento'] =$this->input->post("nasientoe");
+            $dato['chasis'] =$this->input->post("chasise");
+            $dato['nllanta'] =$this->input->post("nllantae");
+            $dato['neje'] =$this->input->post("nejee");
+            $dato['tuso'] =$this->input->post("tusoe");
+            $dato['modal'] =2;
+            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
+            $canti=count($this->Model_Cochera->valida_vehiculo($dato));
+
+            if($canti>0){
+                echo "error";
+            }else{
+                $this->Model_Cochera->update_vehiculo($dato);
+            }
+        }
+        else{
+            redirect('');
+        }        
+    }
+
+    public function Delete_Vehiculo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['id_vehiculo'] =$this->input->post("id_vehiculo");
+            $this->Model_Cochera->delete_vehiculo($dato);
+        }
+        else{
+            redirect('');
+        }        
+    }
 }
