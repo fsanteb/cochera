@@ -645,7 +645,7 @@ class Cochera extends CI_Controller {
     //---------asignacion dueño
     public function AsignacionD(){
         if ($this->session->userdata('usuario')) {
-            $dato['list_asignacion'] = $this->Model_Cochera->get_list_vehiculo();
+            $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
             $this->load->view('Configuracion/AsignacionD/index',$dato);
         }else{
             redirect('');
