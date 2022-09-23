@@ -545,11 +545,12 @@ class Model_Cochera extends CI_Model {
     }
 
     function busca_modelov($id_marca){
+            $sql = "SELECT * from modelo where id_marca=$id_marca";
         
-            $sql = "SELECT * from modelo where estado=1 and id_marca='$id_marca'";
-
+        //echo $sql;
         $query = $this->db->query($sql)->result_Array();
         return $query;
     }
+
 
 }

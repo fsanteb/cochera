@@ -300,7 +300,7 @@ class Cochera extends CI_Controller {
         $this->load->view('Configuracion/Color/modal_editar',$dato);
     }
 
-    //--------DUEÑO
+    //--------DUEÑO------------//
     public function Dueno() {
         if (!$this->session->userdata('usuario')) {
            redirect(base_url());
@@ -336,6 +336,7 @@ class Cochera extends CI_Controller {
             $this->Model_Cochera->insert_dueno($dato);
         }
     }
+
     public function Update_Dueno(){
         if (!$this->session->userdata('usuario')) {
             redirect(base_url());
@@ -512,7 +513,7 @@ class Cochera extends CI_Controller {
         }
     }
 
-    //------------VEHICULO
+    //------------VEHICULO---------------------//
     public function Vehiculo(){
         if ($this->session->userdata('usuario')) {
             $dato['list_vehiculo'] = $this->Model_Cochera->get_list_vehiculo();
@@ -585,14 +586,13 @@ class Cochera extends CI_Controller {
 
     public function Modal_Update_Vehiculo($id_vehiculo){
         if ($this->session->userdata('usuario')) {
-            $dato['get_id'] = $this->Model_Cochera->get_list_vehiculo($id_vehiculo,$dato=null);
-            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
-            $dato['list_color_vehiculo'] = $this->Model_Cochera->get_list_colorv($id_color=null,$dato);
-            $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipov($id_tipo=null,$dato);
+            $dato['get_id'] = $this->Model_Cochera->get_list_vehiculo($id_vehiculo);
+            $dato['list_color_vehiculo'] = $this->Model_Cochera->get_list_color($id_color=null);
+            $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipovehiculo($id_tipo=null);
             $dato['id_tipo'] =$dato['get_id'][0]['id_tipo'];
-            $dato['list_marca_vehiculo'] = $this->Model_Cochera->busca_marcav($dato);
-            $dato['id_marca'] =$dato['get_id'][0]['id_marca'];
-            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($dato);
+            $dato['list_marca_vehiculo'] = $this->Model_Cochera->get_list_marca($id_marca=null);
+            $id_marca =$dato['get_id'][0]['id_marca'];
+            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($id_marca);
             $this->load->view('Configuracion/Vehiculo/modal_upd',$dato);   
         }
         else{
@@ -645,9 +645,14 @@ class Cochera extends CI_Controller {
     public function Busca_ModeloV($t){
         if ($this->session->userdata('usuario')) {
             $dato['modal']=$t;
-            $dato['id_marca'] =$this->input->post("id_marca");
-            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($dato['id_marca']);
-            $this->load->view('Configuracion/Vehiculo/cmb_modelo',$dato);   
+            $v ='';
+            if($t==2){
+                $v ="e";
+            }
+            $id_marca=$this->input->post("id_marca".$v);
+            //var_dump($dato['id_marca'] );
+            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($id_marca);
+            $this->load->view('Configuracion/Vehiculo/cmb_modelo',$dato);
 
 
         }

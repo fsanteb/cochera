@@ -1262,9 +1262,9 @@
     } 
 
     function Update_Vehiculo(){
-        var dataString = new FormData(document.getElementById('formulario_colore'));
-        var url="<?php echo site_url(); ?>Cochera/Update_Color";
-        if (Valida_Color('2')) {
+        var dataString = new FormData(document.getElementById('formulario_vehiculoe'));
+        var url="<?php echo site_url(); ?>Cochera/Update_Vehiculo";
+        if (Valida_Vehiculo('2')) {
             $.ajax({
                 type:"POST",
                 url: url,

@@ -53,7 +53,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <th>Tipo Uso</th>
                                     <th>Fabricación</th>
                                     <th>Adquisición</th>
-                                    <th>Estado</th>
                                     <th class="no-content">Acción</th>
                                 </tr>
                             </thead>
@@ -74,9 +73,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <td><?php echo $list['tuso'] ?></td>
                                         <td><?php echo $list['fecha_fabricacion'] ?></td>
                                         <td><?php echo $list['fecha_adquisicion'] ?></td>
-                                        <td></td>
                                         <td >
-                                            <a href="" data-toggle="modal" data-target="#ModalUpdate" ModalUpdate="<?= site_url('Administrador/Modal_Update_Vehiculo') ?>/<?php echo $list['id_vehiculo'] ?>">
+                                            <a href="" data-toggle="modal" data-target="#ModalUpdate" ModalUpdate="<?= site_url('Cochera/Modal_Update_Vehiculo') ?>/<?php echo $list['id_vehiculo'] ?>">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 text-success"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                                             </a>
                                             <a style="cursor:pointer;" onclick="Delete_Vehiculo('<?php echo $list['id_vehiculo']; ?>')">
