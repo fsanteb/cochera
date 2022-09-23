@@ -444,19 +444,6 @@ class Model_Cochera extends CI_Model {
             return $query;
     }
 
-    //-------------------COLOR-------------------//
-    function get_list_color($id_color=null){
-        if(isset($id_color) && $id_color > 0){
-            $sql = "SELECT * from color where id_color =".$id_color;
-        }
-        else
-        {
-            $sql = "SELECT * from color where estado=1";
-        }
-        $query = $this->db->query($sql)->result_Array();
-        return $query;
-    }
-    
     function valida_vehiculo($dato){
         $condicion="";
         if($dato['modal']==2){
@@ -506,6 +493,19 @@ class Model_Cochera extends CI_Model {
         $sql = "UPDATE vehiculo SET estado=2,fec_eli=NOW(),user_eli=$id_usuario
                 WHERE id_vehiculo='".$dato['id_vehiculo']."'";
        $this->db->query($sql);
+    }
+
+    //-------------------COLOR-------------------//
+    function get_list_color($id_color=null){
+        if(isset($id_color) && $id_color > 0){
+            $sql = "SELECT * from color where id_color =".$id_color;
+        }
+        else
+        {
+            $sql = "SELECT * from color where estado=1";
+        }
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
     }
 
     function valida_color($dato){
@@ -559,6 +559,12 @@ class Model_Cochera extends CI_Model {
             }
             $query = $this->db->query($sql)->result_Array();
             return $query;
+        }
+    function busca_modelov($id_marca){
+        $sql = "SELECT * from modelo where estado=1 and id_marca='$id_marca'";
+
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
     }
 
 }
