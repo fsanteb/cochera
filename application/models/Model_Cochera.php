@@ -59,7 +59,6 @@ class Model_Cochera extends CI_Model {
     }
 
     function colaborador_porcentaje($id_usuario=null){
-        
         if(isset($id_usuario) && $id_usuario > 0){
             $sql = "SELECT u.id_usuario, u.usuario_apater, td.cod_tipo_documento,u.id_departamento,u.id_provincia,u.id_distrito,u.fec_emision_doc,u.fec_vencimiento_doc,u.id_estado_civil,u.otro_estado_civil,
                 u.num_celp,u.num_doc, u.usuario_amater, u.usuario_nombres, n.nom_nacionalidad,u.id_departamentonac,u.id_provincianac,u.id_distritonac,u.flag,
@@ -130,7 +129,7 @@ class Model_Cochera extends CI_Model {
                 from users u
                 left join tipo_documento td on td.id_tipo_documento=u.id_tipo_documento
                 LEFT JOIN nacionalidad n on n.id_nacionalidad=u.id_nacionalidad
-                where u.estado=1 and u.id_nivel<>1";
+                where u.estado=1 and u.id_nivel=2";
         }
         $query = $this->db->query($sql)->result_Array();
         return $query;
@@ -542,6 +541,24 @@ class Model_Cochera extends CI_Model {
         $sql="UPDATE color set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_color='".$dato['id_color']."'";
 
         $this->db->query($sql);
+    }
+
+    //--------asignacion dueño
+    function get_list_asignacion_dueno($id_asignacion=null){
+        if(isset($id_asignacion) && $id_asignacion > 0){
+            $sql = "SELECT a.* FROM asignacion_dueno a
+            WHERE a.id_asignacion=$id_asignacion";
+        }else{
+            $sql = "SELECT a.*,concat(u.usuario_nombres,' ',u.usuario_apater,' ',u.usuario_amater) as dueno,
+            v.placa
+            
+            FROM asignacion_dueno a
+            left join users u on a.id_usuario=u.id_usuario
+            left join vehiculo v on a.id_vehiculo=v.id_vehiculo
+            WHERE a.estado=1";
+            }
+            $query = $this->db->query($sql)->result_Array();
+            return $query;
     }
 
 }
