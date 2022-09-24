@@ -50,7 +50,7 @@ class Model_Cochera extends CI_Model {
         $this->db->query($sql);
     }
 
-    //------------dueño
+    //------------dueño-------------//
     function get_list_nivel_dueno(){
         $sql = "SELECT * from nivel where estado=1 and id_nivel in (2)";
         
@@ -490,8 +490,8 @@ class Model_Cochera extends CI_Model {
 
     function delete_vehiculo($dato){
         $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
-        $sql = "UPDATE vehiculo SET estado=2,fec_eli=NOW(),user_eli=$id_usuario
-                WHERE id_vehiculo='".$dato['id_vehiculo']."'";
+        $sql = "UPDATE asignacion_dueno SET estado=2,fec_eli=NOW(),user_eli=$id_usuario
+                WHERE id_asignacion='".$dato['id_asignacion']."'";
        $this->db->query($sql);
     }
 
@@ -543,7 +543,7 @@ class Model_Cochera extends CI_Model {
         $this->db->query($sql);
     }
 
-    //--------asignacion dueño
+//--------asignacion dueño-------------------------//
     function get_list_asignacion_dueno($id_asignacion=null){
         if(isset($id_asignacion) && $id_asignacion > 0){
             $sql = "SELECT a.* FROM asignacion_dueno a
@@ -559,7 +559,45 @@ class Model_Cochera extends CI_Model {
             }
             $query = $this->db->query($sql)->result_Array();
             return $query;
-        }
+    }
+
+    function valida_asignacion_dueno($dato){
+            $v="";
+            if($dato['mod']==2){
+            $v=" and id_asignacion!='".$dato['id_asignacion']."'";
+            }
+            $sql = "SELECT * from asignacion_dueno where estado=1 and id_usuario='".$dato['id_dueno']."' and id_vehiculo='".$dato['id_vehiculo']."' $v";
+
+            $query = $this->db->query($sql)->result_Array();
+            return $query;
+    }
+    
+    function insert_asignacion_dueno($dato){
+        
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="INSERT into asignacion_dueno (id_usuario,id_vehiculo, estado,fec_reg, user_reg ) 
+            values ('".$dato['id_dueno']."','".$dato['id_vehiculo']."', 1,NOW(),".$id_usuario.")";
+            $this->db->query($sql);
+    }
+        
+    function update_asignacion_dueno($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="UPDATE asignacion_dueno set nom_color='".$dato['nom_color']."',fec_act=NOW(), user_act=".$id_usuario." where id_color='".$dato['id_color']."'";
+           
+            $this->db->query($sql);
+    }
+    
+    function delete_asignacion_dueno($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="UPDATE color set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_color='".$dato['id_color']."'";
+    
+            $this->db->query($sql);
+    }
+
+
     function busca_modelov($id_marca){
         $sql = "SELECT * from modelo where estado=1 and id_marca='$id_marca'";
 

@@ -97,7 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     $(document).ready(function() {
         $("#liconfiguracion").addClass('active');
         //$("#mconfiguracion").attr('aria-expanded','true');
-        $("#marca").addClass('active');
+        $("#vehiculo").addClass('active');
     });
 </script>
 <?php $this->load->view('validaciones'); ?>

@@ -642,7 +642,7 @@ class Cochera extends CI_Controller {
         }        
     }
 
-    //---------asignacion dueño
+    //---------asignacion dueño---------------//
     public function AsignacionD(){
         if ($this->session->userdata('usuario')) {
             $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
@@ -664,65 +664,31 @@ class Cochera extends CI_Controller {
     }
 
     public function Insert_AsignacionD(){
-        if ($this->session->userdata('usuario')) {
-            $dato['placa'] =$this->input->post("placa");
-            $dato['pregistro'] =$this->input->post("pregistro");
-            $dato['serie'] =$this->input->post("serie");
-            $dato['fec_fabricacion'] =$this->input->post("fec_fabricacion");
-            $dato['fec_adquisicion'] =$this->input->post("fec_adquisicion");
-            $dato['id_tipo'] =$this->input->post("id_tipo");
-            $dato['id_marca'] =$this->input->post("id_marca");
-            $dato['id_modelo'] =$this->input->post("id_modelo");
-            $dato['id_color'] =$this->input->post("id_color");
-            $dato['nasiento'] =$this->input->post("nasiento");
-            $dato['chasis'] =$this->input->post("chasis");
-            $dato['nllanta'] =$this->input->post("nllanta");
-            $dato['neje'] =$this->input->post("neje");
-            $dato['tuso'] =$this->input->post("tuso");
-            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
-            $dato['modal']= 1;
-            $canti=count($this->Model_Cochera->valida_vehiculo($dato));
-
-            if($canti>0){
-                echo "error";
-            }else{
-                $num = count($this->Model_Cochera->get_cant_vehiculo($dato));
-                $aniof=substr(date('Y'), 2,2);
-                if($num<9){
-                    $codigo="V"."0000".($num+1);
-                }
-                if($num>=9 && $num<99){
-                    $codigo="V"."000".($num+1);
-                }
-                if($num>=99 && $num<999){
-                    $codigo="V"."00".($num+1);
-                }
-                if($num>=999 && $num<9999){
-                    $codigo="V"."0".($num+1);
-                }
-                if($num>9999){
-                    $codigo="V".($num+1);
-                }
-                $dato['cod_vehiculo']= $codigo;
-                $this->Model_Cochera->insert_vehiculo($dato);
-            }
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_dueno']= $this->input->post("id_dueno");
+        //var_dump($dato['id_usuario']);
+        $dato['id_vehiculo']= $this->input->post("id_vehiculo");
+        $dato['mod']=1;
+        $total=count($this->Model_Cochera->valida_asignacion_dueno($dato));
+        if($total>0){
+            echo "error";
         }
         else{
-            redirect('');
-        }        
+            $this->Model_Cochera->insert_asignacion_dueno($dato);
+        }
     }
 
-    public function Modal_Update_AsignacionD($id_vehiculo){
+    public function Modal_Update_AsignacionD($id_asignacion){
         if ($this->session->userdata('usuario')) {
-            $dato['get_id'] = $this->Model_Cochera->get_list_vehiculo($id_vehiculo,$dato=null);
-            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
-            $dato['list_color_vehiculo'] = $this->Model_Cochera->get_list_colorv($id_color=null,$dato);
-            $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipov($id_tipo=null,$dato);
-            $dato['id_tipo'] =$dato['get_id'][0]['id_tipo'];
-            $dato['list_marca_vehiculo'] = $this->Model_Cochera->busca_marcav($dato);
-            $dato['id_marca'] =$dato['get_id'][0]['id_marca'];
-            $dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($dato);
-            $this->load->view('Configuracion/Vehiculo/modal_upd',$dato);   
+
+            $dato['get_id'] = $this->Model_Cochera->get_list_asignacion_dueno($id_asignacion);
+            $dato['list_vehiculo'] = $this->Model_Cochera->get_list_vehiculo($id_vehiculo=null);
+            $dato['list_dueno'] = $this->Model_Cochera->colaborador_porcentaje($id_usuario=null);
+            //$dato['list_modelo_vehiculo']=$this->Model_Cochera->busca_modelov($dato);
+
+            $this->load->view('Configuracion/AsignacionD/modal_editar',$dato);   
         }
         else{
             redirect('');
@@ -763,7 +729,7 @@ class Cochera extends CI_Controller {
 
     public function Delete_AsignacionD(){
         if ($this->session->userdata('usuario')) {
-            $dato['id_vehiculo'] =$this->input->post("id_vehiculo");
+            $dato['id_asignacion'] =$this->input->post("id_asignacion");
             $this->Model_Cochera->delete_vehiculo($dato);
         }
         else{

@@ -233,7 +233,7 @@
     }
 
 
-    //------------dueño
+    //-------------------------------dueño-------------------------------//
     function Insert_Dueno(){
         var dataString = new FormData(document.getElementById('formulario_dueno'));
         var url="<?php echo site_url(); ?>Cochera/Insert_Dueno";
@@ -266,42 +266,6 @@
             });
         } 
     }
-
-    //---------------------------------------------------marca--------------------------------------------------
-
-    function Insert_Marca(){
-        var dataString = new FormData(document.getElementById('formulario_marca'));
-        var url="<?php echo site_url(); ?>Cochera/Insert_Marca";
-        //alert(url);
-        if (Valida_Marca('1')) {
-            $.ajax({
-                type:"POST",
-                url: url,
-                data:dataString,
-                processData: false,
-                contentType: false,
-                success:function (data) {
-                    if(data=="error"){
-                        swal.fire(
-                            'Registro Denegado!',
-                            'Existe un registro con los mismos datos!',
-                            'error'
-                        ).then(function() {
-                        });
-                    }else{
-                       swal.fire(
-                        'Registro Exitoso!',
-                        '',
-                        'success'
-                    ).then(function() {
-                        window.location = "<?php echo site_url(); ?>Cochera/Marca";
-                    }); 
-                    }
-                }
-            });
-        } 
-    }
-
 
     function Valida_Dueno(t) {
         v="";
@@ -339,33 +303,6 @@
         return true;
     }
 
-    function Valida_Marca(t) {
-
-        v="";
-        if(t==2){
-            v="e";
-        }
-        if($('#cod_marca'+v).val().trim() === '') {
-            swal({
-                title: 'Debe ingresar código',
-                animation: false,
-                customClass: 'animated tada',
-                padding: '2em'
-            })
-            return false;
-        }
-        if($('#nom_marca'+v).val().trim() === '') {
-            swal({
-                title: 'Debe ingresar marca',
-                animation: false,
-                customClass: 'animated tada',
-                padding: '2em'
-            })
-            return false;
-        }
-        return true;
-    } 
-
     function Update_Dueno(){
         var dataString = new FormData(document.getElementById('formulario_duenoe'));
         var url="<?php echo site_url(); ?>Cochera/Update_Dueno";
@@ -397,52 +334,6 @@
             });
         } 
     }
-
-        
-
-    function Update_Marca(){
-        var dataString = new FormData(document.getElementById('formulario_marcae'));
-        var url="<?php echo site_url(); ?>Cochera/Update_Marca";
-        if (Valida_Marca('2')) {
-            $.ajax({
-                type:"POST",
-                url: url,
-                data:dataString,
-                processData: false,
-                contentType: false,
-                success:function (data) {
-                    if(data=="error"){
-                        swal.fire(
-                            'Actualización Denegada!',
-                            'Existe un registro con los mismos datos!',
-                            'error'
-                        ).then(function() {
-                        });
-                    }else{
-                      swal.fire(
-                        'Actualización Exitosa!',
-                        '',
-                        'success'
-                    ).then(function() {
-                        window.location.reload();
-                        
-                    });  
-                    }
-                }
-            });
-        }    
-        else{
-            bootbox.alert(msgDate)
-            var input = $(inputFocus).parent();
-            $(input).addClass("has-error");
-            $(input).on("change", function () {
-                if ($(input).hasClass("has-error")) {
-                    $(input).removeClass("has-error");
-                }
-            });
-        }
-    }
-
 
     function Delete_Dueno(id){
         var id = id;
@@ -492,6 +383,111 @@
         });
 
     }
+
+    //---------------------------------------------------marca--------------------------------------------------
+
+    function Insert_Marca(){
+        var dataString = new FormData(document.getElementById('formulario_marca'));
+        var url="<?php echo site_url(); ?>Cochera/Insert_Marca";
+        //alert(url);
+        if (Valida_Marca('1')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Registro Denegado!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                       swal.fire(
+                        'Registro Exitoso!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location = "<?php echo site_url(); ?>Cochera/Marca";
+                    }); 
+                    }
+                }
+            });
+        } 
+    } 
+
+    function Update_Marca(){
+        var dataString = new FormData(document.getElementById('formulario_marcae'));
+        var url="<?php echo site_url(); ?>Cochera/Update_Marca";
+        if (Valida_Marca('2')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Actualización Denegada!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                      swal.fire(
+                        'Actualización Exitosa!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location.reload();
+                        
+                    });  
+                    }
+                }
+            });
+        }    
+        else{
+            bootbox.alert(msgDate)
+            var input = $(inputFocus).parent();
+            $(input).addClass("has-error");
+            $(input).on("change", function () {
+                if ($(input).hasClass("has-error")) {
+                    $(input).removeClass("has-error");
+                }
+            });
+        }
+    }
+
+    function Valida_Marca(t) {
+
+        v="";
+            if(t==2){
+                v="e";
+        }
+        if($('#cod_marca'+v).val().trim() === '') {
+        swal({
+        title: 'Debe ingresar código',
+        animation: false,
+        customClass: 'animated tada',
+        padding: '2em'
+            })
+            return false;
+        }
+        if($('#nom_marca'+v).val().trim() === '') {
+        swal({
+        title: 'Debe ingresar marca',
+        animation: false,
+        customClass: 'animated tada',
+        padding: '2em'
+        })
+            return false;
+        }
+        return true;
+    } 
 
     function Delete_Marca(id){
         var id = id;
@@ -543,7 +539,7 @@
     }
 
 
-    //-----------perfil
+    //-----------perfil-----------//
     function GDatosP() {
         $(document)
         .ajaxStart(function() {
@@ -649,6 +645,7 @@
         }
         return true;
     }
+
     //---------------------------------------------------Modelo--------------------------------------------------
 
     function Insert_Modelo(){
@@ -1372,5 +1369,162 @@
                 }
             });
     }
+
+
+    //-----------------------------------------Asignacion de Dueño--------------------------------------------------
+
+    function Insert_Asignacion_dueno(){
+        var dataString = new FormData(document.getElementById('formulario_asignacion_dueno'));
+        var url="<?php echo site_url(); ?>Cochera/Insert_AsignacionD";
+        
+        if (Valida_Asignacion_dueno('1')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Registro Denegado!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                       swal.fire(
+                        'Registro Exitoso!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location = "<?php echo site_url(); ?>Cochera/AsignacionD";
+                    }); 
+                    }
+                }
+            });
+        } 
+    }
+
+    function Valida_Asignacion_dueno(t) {
+        //alert("aqui estoy2");
+        v="";
+        if(t==2){
+            v="e";
+        }
+        if($('#id_dueno'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Dueño',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+        if($('#id_vehiculo'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Vehículo',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+        return true;
+    } 
+
+    function Update_Asignacion_dueno(){
+        var dataString = new FormData(document.getElementById('formulario_asignacion_duenoe'));
+        var url="<?php echo site_url(); ?>Cochera/Update_AsignacionD";
+        if (Valida_Asignacion_dueno('2')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Actualización Denegada!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                      swal.fire(
+                        'Actualización Exitosa!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location.reload();
+                        
+                    });  
+                    }
+                }
+            });
+        }    
+        else{
+            bootbox.alert(msgDate)
+            var input = $(inputFocus).parent();
+            $(input).addClass("has-error");
+            $(input).on("change", function () {
+                if ($(input).hasClass("has-error")) {
+                    $(input).removeClass("has-error");
+                }
+            });
+        }
+    }
+
+    function Delete_Asignacion_dueno(id){
+        var id = id;
+        var url="<?php echo site_url(); ?>Cochera/Delete_AsignacionD";
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: '¿Realmente desea eliminar el registro?',
+            text: "El registro será eliminado permanentemente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {'id_asignacion':id},
+                    success:function () {
+                        Swal(
+                            'Eliminado!',
+                            'El registro ha sido eliminado satisfactoriamente.',
+                            'success'
+                        ).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+
+            
+            } else if (
+            result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelado',
+                    'El registro está a salvo :)',
+                    'error'
+                )
+            }
+        });
+
+    }
+
+
 
 </script>
