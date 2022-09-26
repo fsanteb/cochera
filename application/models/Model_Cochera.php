@@ -584,7 +584,7 @@ class Model_Cochera extends CI_Model {
     function update_asignacion_dueno($dato){
             $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
         
-            $sql="UPDATE asignacion_dueno set nom_color='".$dato['nom_color']."',fec_act=NOW(), user_act=".$id_usuario." where id_color='".$dato['id_color']."'";
+            $sql="UPDATE asignacion_dueno set id_usuario='".$dato['id_dueno']."',id_vehiculo='".$dato['id_vehiculo']."',fec_act=NOW(), user_act=".$id_usuario." where id_asignacion='".$dato['id_asignacion']."'";
            
             $this->db->query($sql);
     }

@@ -697,29 +697,16 @@ class Cochera extends CI_Controller {
 
     public function Update_AsignacionD(){
         if ($this->session->userdata('usuario')) {
-            $dato['id_vehiculo'] =$this->input->post("id_vehiculo");
-            $dato['placa'] =$this->input->post("placae");
-            $dato['pregistro'] =$this->input->post("pregistroe");
-            $dato['serie'] =$this->input->post("seriee");
-            $dato['fec_fabricacion'] =$this->input->post("fec_fabricacione");
-            $dato['fec_adquisicion'] =$this->input->post("fec_adquisicione");
-            $dato['id_tipo'] =$this->input->post("id_tipoe");
-            $dato['id_marca'] =$this->input->post("id_marcae");
-            $dato['id_modelo'] =$this->input->post("id_modeloe");
-            $dato['id_color'] =$this->input->post("id_colore");
-            $dato['nasiento'] =$this->input->post("nasientoe");
-            $dato['chasis'] =$this->input->post("chasise");
-            $dato['nllanta'] =$this->input->post("nllantae");
-            $dato['neje'] =$this->input->post("nejee");
-            $dato['tuso'] =$this->input->post("tusoe");
-            $dato['modal'] =2;
-            $dato['id_empresa']= $_SESSION['usuario'][0]['id_empresa'];
-            $canti=count($this->Model_Cochera->valida_vehiculo($dato));
+            $dato['id_asignacion'] =$this->input->post("id_asignacion");
+            $dato['id_dueno'] =$this->input->post("id_duenoe");
+            $dato['id_vehiculo'] =$this->input->post("id_vehiculoe");
+            $dato['mod'] =2;
+            $canti=count($this->Model_Cochera->valida_asignacion_dueno($dato));
 
             if($canti>0){
                 echo "error";
             }else{
-                $this->Model_Cochera->update_vehiculo($dato);
+                $this->Model_Cochera->update_asignacion_dueno($dato);
             }
         }
         else{
