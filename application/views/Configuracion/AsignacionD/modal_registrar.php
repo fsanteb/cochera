@@ -21,18 +21,6 @@
 	                			<?php } ?>
 	                </select> 
             </div>
-            <div class="form-group col-md-2">
-                <label class="col-sm-3 control-label text-bold">Vehículo:</label>
-            </div>
-            <div class="form-group col-md-4">
-                  <select class="form-control" name="id_vehiculo" id="id_vehiculo">
-	                		<option value="0"  >Seleccione</option>
-                            <?php foreach($list_vehiculo as $list){ ?>
-	                    		<option value="<?php echo $list['id_vehiculo'] ; ?>" >
-	                        	<?php echo $list['placa'];?></option>
-	                			<?php } ?>
-	                </select> 
-            </div>
             
         </div>
     </div>
