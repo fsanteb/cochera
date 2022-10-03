@@ -811,4 +811,23 @@ class Cochera extends CI_Controller {
             redirect('');
         }        
     }
+
+    public function Operaciones(){
+        if ($this->session->userdata('usuario')) {
+            //$dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
+            $this->load->view('Operaciones/Operaciones/index');
+        }else{
+            redirect('');
+        }
+    }
+
+    public function Modal_Operaciones(){
+        if ($this->session->userdata('usuario')) {
+            $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
+            $this->load->view('Operaciones/Operaciones/modal_registrar',$dato);   
+        }
+        else{
+            redirect('');
+        }
+    }
 }

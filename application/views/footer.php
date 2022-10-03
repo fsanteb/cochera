@@ -34,6 +34,8 @@
     <script src="<?= base_url() ?>template/assets/js/dashboard/dash_1.js"></script>
     <script src="<?= base_url() ?>template/plugins/table/datatable/datatables.js"></script>
     <script src="<?= base_url() ?>template/assets/js/scrollspyNav.js"></script>
+    <script src="<?= base_url() ?>template/plugins/select2/select2.min.js"></script>
+    <script src="<?= base_url() ?>template/plugins/select2/custom-select2.js"></script>
     <script src="<?= base_url() ?>template/plugins/sweetalerts/sweetalert2.min.js"></script>
     <script src="<?= base_url() ?>template/plugins/sweetalerts/custom-sweetalert.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
