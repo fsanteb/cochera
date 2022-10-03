@@ -724,6 +724,77 @@ class Cochera extends CI_Controller {
         }        
     }
 
+
+    //----------------------Costo--------------------//
+    public function Costo() {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['list_costo'] = $this->Model_Cochera->get_list_costo();
+        $this->load->view('Configuracion/Costo/index', $dato);
+    }
+
+    public function Modal_Costo() {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipovehiculo($id_tipo=null);
+        $this->load->view('Configuracion/Costo/modal_registrar', $dato);
+    }
+
+    public function Insert_Costo(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_tipo']= $this->input->post("id_tipo");
+        $dato['costo_diario']= $this->input->post("costo_diario");
+        $dato['costo_mensual']= $this->input->post("costo_mensual");
+        $dato['mod']=1;
+        $total=count($this->Model_Cochera->valida_costo($dato));
+        if($total>0){
+            echo "error";
+        }
+        else{
+            $this->Model_Cochera->insert_costo($dato);
+        }
+    }
+    public function Update_Costo(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_costo']= $this->input->post("id_costo");
+        $dato['id_tipo']= $this->input->post("id_tipoe");
+        $dato['costo_diario']= $this->input->post("costo_diarioe");
+        $dato['costo_mensual']= $this->input->post("costo_mensuale");
+        $dato['mod']=2;
+        $total=count($this->Model_Cochera->valida_costo($dato));
+        //echo($total);
+        if($total>0){
+            echo "error";
+        }else{
+            $this->Model_Cochera->update_costo($dato);
+        }
+    }
+
+    public function Delete_Costo(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_costo']= $this->input->post("id_costo");
+        $this->Model_Cochera->delete_costo($dato);
+        
+    }
+
+    public function Modal_Update_Costo($id_costo) {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['get_id'] = $this->Model_Cochera->get_list_costo($id_costo);
+        $dato['list_tipo_vehiculo'] = $this->Model_Cochera->get_list_tipovehiculo();
+        $this->load->view('Configuracion/Costo/modal_editar',$dato);
+    }
+
+
     public function Busca_ModeloV($t){
         if ($this->session->userdata('usuario')) {
             $dato['modal']=$t;
