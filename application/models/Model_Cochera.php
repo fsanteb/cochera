@@ -606,4 +606,54 @@ class Model_Cochera extends CI_Model {
     }
 
 
+    //-------------costo--------------------------
+    function get_list_costo($id_costo=null){
+        if(isset($id_costo) && $id_costo > 0){
+            $sql = "SELECT * from costo where id_costo =".$id_costo;
+        }
+        else
+        {
+            $sql = "SELECT co.* , m.nom_tipo 
+            from costo co
+            LEFT JOIN tipo_vehiculo m ON co.id_tipo= m.id_tipo
+            where co.estado=1";
+        }
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function valida_costo($dato){
+        $v="";
+        if($dato['mod']==2){
+        $v=" and id_costo!='".$dato['id_costo']."'";
+        }
+        $sql = "SELECT * from costo where estado=1 and id_tipo='".$dato['id_tipo']."' $v";
+        //echo $sql;
+        $query = $this->db->query($sql)->result_Array();
+        return $query;
+    }
+
+    function insert_costo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="INSERT into costo (id_tipo,costo_diario,costo_mensual, estado,fec_reg, user_reg ) 
+        values ('".$dato['id_tipo']."','".$dato['costo_diario']."','".$dato['costo_mensual']."', 1,NOW(),".$id_usuario.")";
+        $this->db->query($sql);
+    }
+    
+    function update_costo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="UPDATE costo set id_tipo='".$dato['id_tipo']."',costo_diario='".$dato['costo_diario']."',costo_mensual='".$dato['costo_mensual']."',fec_act=NOW(), user_act=".$id_usuario." where id_costo='".$dato['id_costo']."'";
+        $this->db->query($sql);
+    }
+
+    function delete_costo($dato){
+        $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+        $sql="UPDATE costo set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_costo='".$dato['id_costo']."'";
+        $this->db->query($sql);
+    }
+
+
 }
