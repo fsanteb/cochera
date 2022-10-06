@@ -652,13 +652,14 @@ class Cochera extends CI_Controller {
         }
     }
 
-    public function Modal_AsignacionD(){
+    public function Modal_AsignacionD($c){
         if ($this->session->userdata('usuario')) {
             $dato['list_vehiculo'] = $this->Model_Cochera->get_list_vehiculo();
             $dato['list_dueno'] = $this->Model_Cochera->colaborador_porcentaje();
+            $dato['dueno']=$c;
             $this->load->view('Configuracion/AsignacionD/modal_registrar',$dato);   
         }
-        else{
+        else{ 
             redirect('');
         }
     }
@@ -670,6 +671,8 @@ class Cochera extends CI_Controller {
         $dato['id_dueno']= $this->input->post("id_dueno");
         //var_dump($dato['id_usuario']);
         $dato['id_vehiculo']= $this->input->post("id_vehiculo");
+        //var_dump($dato['id_dueno'])."<br>";
+        //var_dump($dato['id_vehiculo']);
         $dato['mod']=1;
         $total=count($this->Model_Cochera->valida_asignacion_dueno($dato));
         if($total>0){
@@ -758,6 +761,7 @@ class Cochera extends CI_Controller {
             $this->Model_Cochera->insert_costo($dato);
         }
     }
+
     public function Update_Costo(){
         if (!$this->session->userdata('usuario')) {
             redirect(base_url());
@@ -812,12 +816,28 @@ class Cochera extends CI_Controller {
         }        
     }
 
+    //-------------------------------------OPERACIONES----------------------------------//
     public function Operaciones(){
         if ($this->session->userdata('usuario')) {
-            //$dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
-            $this->load->view('Operaciones/Operaciones/index');
+            $dato['list_operaciones'] = $this->Model_Cochera->get_list_operaciones();
+            $this->load->view('Operaciones/Operaciones/index',$dato);
         }else{
             redirect('');
+        }
+    }
+
+    public function Insert_Operaciones(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_asignacion']= $this->input->post("id_asignacion");
+        $dato['mod']=1;
+        $total=count($this->Model_Cochera->valida_operaciones($dato));
+        if($total>0){
+            echo "error";
+        }
+        else{
+            $this->Model_Cochera->insert_operaciones($dato);
         }
     }
 
@@ -829,5 +849,49 @@ class Cochera extends CI_Controller {
         else{
             redirect('');
         }
+    }
+
+    public function AsignacionCombo(){
+        if ($this->session->userdata('usuario')) {
+            $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
+            $this->load->view('Operaciones/Operaciones/cmb_asignacion',$dato);
+        }else{
+            redirect('');
+        }
+    }
+
+    public function Update_Operaciones(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_operaciones']= $this->input->post("id_operaciones");
+        $dato['id_asignacion']= $this->input->post("id_asignacione");
+        $dato['estado_operaciones']= $this->input->post("estado_operacionese");
+        $dato['mod']=2;
+        $total=count($this->Model_Cochera->valida_operaciones($dato));
+        //echo($total);
+        if($total>0){
+            echo "error";
+        }else{
+            $this->Model_Cochera->update_operaciones($dato);
+        }
+    }
+
+    public function Delete_Operaciones(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+        }
+        $dato['id_operaciones']= $this->input->post("id_operaciones");
+        $this->Model_Cochera->delete_operaciones($dato);
+        
+    }
+
+    public function Modal_Update_Operaciones($id_operaciones) {
+        if (!$this->session->userdata('usuario')) {
+           redirect(base_url());
+        }
+        $dato['get_id'] = $this->Model_Cochera->get_list_operaciones($id_operaciones);
+        $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
+        $this->load->view('Operaciones/Operaciones/modal_editar',$dato);
     }
 }

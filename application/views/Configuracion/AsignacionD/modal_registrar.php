@@ -7,8 +7,8 @@
     </div>    
     
     <div class="modal-body" style="max-height:450px; overflow:auto;">
+    <input type="hidden" id="dueno" name="dueno" value="<?php echo $dueno ?>">
         <div class="col-md-12 row">
-            
             <div class="form-group col-md-2">
                 <label class="col-sm-3 control-label text-bold">Dueño: </label>
             </div>
