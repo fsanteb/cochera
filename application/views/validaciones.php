@@ -1398,7 +1398,21 @@
                         '',
                         'success'
                     ).then(function() {
+                        var dueno= $('#dueno').val();
+
+                            if(dueno==="2"){
+                            var url="<?php echo site_url(); ?>Cochera/AsignacionCombo";
+                                $.ajax({
+                                    type:"POST",
+                                    url:url,
+                                    success:function (data) {
+                                        $('#dueno1').html(data);
+                                        $('#ModalUpdate').modal('hide');
+                                    }
+                                });
+                            }else{
                         window.location = "<?php echo site_url(); ?>Cochera/AsignacionD";
+                            }
                     }); 
                     }
                 }
@@ -1526,8 +1540,8 @@
     }
 
 
-       //---------------------------------------------------Costo--------------------------------------------------
-       function Insert_Costo(){
+    //---------------------------------------------------Costo--------------------------------------------------
+    function Insert_Costo(){
         var dataString = new FormData(document.getElementById('formulario_costo'));
         var url="<?php echo site_url(); ?>Cochera/Insert_Costo";
         //alert(url);
@@ -1690,6 +1704,7 @@
     }
 
     function soloNumeros(e) {
+
         var key = e.keyCode || e.which,
         tecla = String.fromCharCode(key).toLowerCase(),
         //letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
@@ -1707,8 +1722,185 @@
         if (letras.indexOf(tecla) == -1 && !tecla_especial) {
         return false;
             }
+    }
+
+
+//---------------------------------------------------OPERACIONES--------------------------------------------------
+function Insert_Operaciones(){
+        var dataString = new FormData(document.getElementById('formulario_operaciones'));
+        var url="<?php echo site_url(); ?>Cochera/Insert_Operaciones";
+        //alert(url);
+        if (Valida_Operaciones('1')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Registro Denegado!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                       swal.fire(
+                        'Registro Exitoso!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location = "<?php echo site_url(); ?>Cochera/Operaciones";
+                    }); 
+                    }
+                }
+            });
+        } 
+    }
+
+    function Valida_Operaciones(t) {
+        v="";
+        if(t==2){
+            v="e";
+        }
+        if($('#id_asignacion'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Dueño',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+        if($('#estado_operaciones'+v).val().trim() === '0') {
+            swal({
+                title: 'Debe Seleccionar Estado',
+                animation: false,
+                customClass: 'animated tada',
+                padding: '2em'
+            })
+            return false;
+        }
+        
+        return true;
+    }
+
+    function Update_Operaciones(){
+        var dataString = new FormData(document.getElementById('formulario_operacione'));
+        var url="<?php echo site_url(); ?>Cochera/Update_Operaciones";
+        if (Valida_Operaciones('2')) {
+            $.ajax({
+                type:"POST",
+                url: url,
+                data:dataString,
+                processData: false,
+                contentType: false,
+                success:function (data) {
+                    if(data=="error"){
+                        swal.fire(
+                            'Actualización Denegada!',
+                            'Existe un registro con los mismos datos!',
+                            'error'
+                        ).then(function() {
+                        });
+                    }else{
+                      swal.fire(
+                        'Actualización Exitosa!',
+                        '',
+                        'success'
+                    ).then(function() {
+                        window.location.reload();
+                        
+                    });  
+                    }
+                }
+            });
+        }    
+        else{
+            bootbox.alert(msgDate)
+            var input = $(inputFocus).parent();
+            $(input).addClass("has-error");
+            $(input).on("change", function () {
+                if ($(input).hasClass("has-error")) {
+                    $(input).removeClass("has-error");
+                }
+            });
+        }
+    }
+
+    function Delete_Operaciones(id){
+        var id = id;
+        var url="<?php echo site_url(); ?>Cochera/Delete_Operaciones";
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success btn-rounded',
+            cancelButtonClass: 'btn btn-danger btn-rounded mr-3',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: '¿Realmente desea eliminar el registro?',
+            text: "El registro será eliminado permanentemente!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Si, eliminar!',
+            cancelButtonText: 'No, cancelar!',
+            reverseButtons: true,
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    type:"POST",
+                    url: url,
+                    data: {'id_operaciones':id},
+                    success:function () {
+                        Swal(
+                            'Eliminado!',
+                            'El registro ha sido eliminado satisfactoriamente.',
+                            'success'
+                        ).then(function() {
+                            window.location.reload();
+                        });
+                    }
+                });
+
+            
+            } else if (
+            result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelado',
+                    'El registro está a salvo :)',
+                    'error'
+                )
+            }
+        });
+
+
+        
+    }
+
+    function soloNumeros(e) {
+
+        var key = e.keyCode || e.which,
+        tecla = String.fromCharCode(key).toLowerCase(),
+        //letras = " áéíóúabcdefghijklmnñopqrstuvwxyz",
+        letras = "0123456789",
+        especiales = [8, 37, 39, 46],
+        tecla_especial = false;
+
+        for (var i in especiales) {
+        if (key == especiales[i]) {
+            tecla_especial = true;
+            break;
+        }
         }
 
+        if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+        return false;
+            }
+    }
+    
 
 
 </script>

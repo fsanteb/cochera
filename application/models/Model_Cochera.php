@@ -548,6 +548,7 @@ class Model_Cochera extends CI_Model {
         if(isset($id_asignacion) && $id_asignacion > 0){
             $sql = "SELECT a.* FROM asignacion_dueno a
             WHERE a.id_asignacion=$id_asignacion";
+            
         }else{
             $sql = "SELECT a.*,concat(u.usuario_nombres,' ',u.usuario_apater,' ',u.usuario_amater) as dueno,
             v.placa
@@ -654,6 +655,60 @@ class Model_Cochera extends CI_Model {
         $sql="UPDATE costo set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_costo='".$dato['id_costo']."'";
         $this->db->query($sql);
     }
+
+
+    //-------------OPERACIONES--------------------------
+        function get_list_operaciones($id_operaciones=null){
+            if(isset($id_operaciones) && $id_operaciones > 0){
+                $sql = "SELECT * from operaciones where id_operaciones =".$id_operaciones;
+            }
+            else
+            {
+                $sql = "SELECT op.* , u.usuario_nombres,u.usuario_apater,u.usuario_amater , v.placa,
+                case when op.estado_operaciones=1 then 'No Pagado'
+                when op.estado_operaciones=2 then 'Pagado' end as descripcionopera
+                from operaciones op
+                LEFT JOIN asignacion_dueno m ON op.id_asignacion= m.id_asignacion
+                LEFT JOIN users u ON m.id_usuario= u.id_usuario
+                LEFT JOIN vehiculo v ON m.id_vehiculo= v.id_vehiculo
+                where op.estado=1";
+            }
+            $query = $this->db->query($sql)->result_Array();
+            return $query;
+        }
+    
+        function valida_operaciones($dato){
+            $v="";
+            if($dato['mod']==2){
+            $v=" and id_operaciones!='".$dato['id_operaciones']."'";
+            }
+            $sql = "SELECT * from operaciones where estado=1 and id_asignacion='".$dato['id_asignacion']."' $v";
+            //echo $sql;
+            $query = $this->db->query($sql)->result_Array();
+            return $query;
+        }
+    
+        function insert_operaciones($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="INSERT into operaciones (id_asignacion,estado_operaciones,estado,fec_reg, user_reg ) 
+            values ('".$dato['id_asignacion']."',1, 1,NOW(),".$id_usuario.")";
+            $this->db->query($sql);
+        }
+        
+        function update_operaciones($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="UPDATE operaciones set id_asignacion='".$dato['id_asignacion']."',estado_operaciones='".$dato['estado_operaciones']."',fec_act=NOW(), user_act=".$id_usuario." where id_operaciones='".$dato['id_operaciones']."'";
+            $this->db->query($sql);
+        }
+    
+        function delete_operaciones($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+        
+            $sql="UPDATE operaciones set estado='2',fec_eli=NOW(), user_eli=".$id_usuario." where id_operaciones='".$dato['id_operaciones']."'";
+            $this->db->query($sql);
+        }
 
 
 }
