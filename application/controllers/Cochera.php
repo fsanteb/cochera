@@ -652,10 +652,11 @@ class Cochera extends CI_Controller {
         }
     }
 
-    public function Modal_AsignacionD(){
+    public function Modal_AsignacionD($m){
         if ($this->session->userdata('usuario')) {
             $dato['list_vehiculo'] = $this->Model_Cochera->get_list_vehiculo();
             $dato['list_dueno'] = $this->Model_Cochera->colaborador_porcentaje();
+            $dato['modal']=$m;
             $this->load->view('Configuracion/AsignacionD/modal_registrar',$dato);   
         }
         else{
