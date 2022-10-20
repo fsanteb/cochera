@@ -894,4 +894,18 @@ class Cochera extends CI_Controller {
         $dato['list_asignacion'] = $this->Model_Cochera->get_list_asignacion_dueno();
         $this->load->view('Operaciones/Operaciones/modal_editar',$dato);
     }
+
+    public function CambiarPass(){
+        if ($this->session->userdata('usuario')) {
+            $password= $this->input->post("password");
+            $dato['password']=$password;
+            $dato['usuario_password']= password_hash($password, PASSWORD_DEFAULT);
+            //var_dump($dato['password']);
+            $this->Model_Cochera->update_password($dato);
+            redirect('login/logout');
+        }
+        else{
+            redirect('');
+        }
+    }
 }

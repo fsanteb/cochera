@@ -56,6 +56,16 @@ class Login extends CI_Controller {
 		//echo $data;
      }
 
+	 public function Cambiar_Password(){
+		if ($this->session->userdata('usuario')) {
+			$this->load->view('login/cambiar_contra');
+		}
+        else{
+            redirect('');
+        }
+
+    }
+
 
 
 		

@@ -710,5 +710,16 @@ class Model_Cochera extends CI_Model {
             $this->db->query($sql);
         }
 
+        function update_password($dato){
+            $id_usuario= $_SESSION['usuario'][0]['id_usuario'];
+    
+            $sql = "update users set usuario_password='".$dato['usuario_password']."',
+                    password_desencriptado='".$dato['password']."',
+                    fec_act=NOW(), user_act=".$id_usuario." 
+                    where id_usuario = ".$id_usuario."";
+                    //echo $sql;
+            $this->db->query($sql);
+        }
+
 
 }
