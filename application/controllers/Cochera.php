@@ -20,6 +20,13 @@ use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\ColumnDimension;
 use PhpOffice\PhpSpreadsheet\Worksheet;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+
 class Cochera extends CI_Controller {
     public function __construct() {
         parent::__construct();
@@ -33,6 +40,9 @@ class Cochera extends CI_Controller {
 
 
     public function index(){
+        if (!$this->session->userdata('usuario')) {
+            redirect(base_url());
+         }
         $this->load->view('index');
     }
 
@@ -908,4 +918,85 @@ class Cochera extends CI_Controller {
             redirect('');
         }
     }
+
+    public function Password(){
+        if ($this->session->userdata('usuario')) {
+            $this->load->view('login/cambiar_contra');
+        }
+        else{
+            redirect('');
+        }
+    }
+
+    public function Recuperar_Contrasenia(){
+		$dato['correo']= $this->input->post("correo");
+        $dato['dni']= $this->input->post("dni");
+        //var_dump($dato['correo']);
+		$dato['get_id']=$this->Model_Cochera->valida_correo($dato);
+		if (count($dato['get_id'])>0){
+			$dato['nombre']=$dato['get_id'][0]['usuario_nombres'];
+            $dato['apellidop']=$dato['get_id'][0]['usuario_apater'];
+            $dato['apellidom']=$dato['get_id'][0]['usuario_amater'];
+            $dato['id']=$dato['get_id'][0]['id_usuario'];
+
+            $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+            //Obtenemos la longitud de la cadena de caracteres
+            $longitudCadena=strlen($cadena);
+        
+            //Definimos la variable que va a contener la contraseña
+            $pass = "";
+            //Se define la longitud de la contraseña, puedes poner la longitud que necesites
+            //Se debe tener en cuenta que cuanto más larga sea más segura será.
+            $longitudPass=6;
+        
+            //Creamos la contraseña recorriendo la cadena tantas veces como hayamos indicado
+            for($i=1 ; $i<=$longitudPass ; $i++){
+                //Definimos numero aleatorio entre 0 y la longitud de la cadena de caracteres-1
+                $pos=rand(0,$longitudCadena-1);
+        
+                //Vamos formando la contraseña con cada carácter aleatorio.
+                $pass .= substr($cadena,$pos,1);
+            }
+
+            $dato['pass'] = $pass;
+            
+            $dato['usuario_password']= password_hash($pass, PASSWORD_DEFAULT);
+
+			$link='https://metalikas.net';
+            $mail = new PHPMailer(true);
+            try {
+                $mail->SMTPDebug = 0;
+                $mail->isSMTP();
+                $mail->Host       = 'mail.sistemaslyf.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'sistemas@sistemaslyf.com';
+                $mail->Password   = 'mbLma3#x.Er}';
+                $mail->SMTPSecure = 'SSL';         
+                $mail->Port       = 25;
+                $mail->setFrom('sistemas@sistemaslyf.com','Soporte TI - Cochera');
+            
+                $mail->addAddress($dato['correo']);
+
+                $mail->Subject = 'Recuperación de contraseña - Cochera';
+                // Establecer el formato de correo electrónico en HTML
+                $mail->isHTML(true);
+                
+                $mailContent = $this->load->view('login/recuperacion_mail', $dato, TRUE);
+                $mail->Body= $mailContent;
+                //$mail->attach('/img/firma.jpeg');
+                $mail->CharSet = 'UTF-8';
+                $mail->send();
+
+                $this->Model_Cochera->update_recupera_contrasenia($dato);
+            
+            } catch (Exception $e) {
+            
+                echo "Hubo un error al enviar el correo: {$mail->ErrorInfo}";
+            
+            }
+		}
+		else{
+			echo "error";
+		}
+	}
 }

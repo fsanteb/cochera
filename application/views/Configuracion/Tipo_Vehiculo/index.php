@@ -133,6 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         </div>
     </div>
+    <b><p class="terms-conditions">Copyright © 2022 LyF Proyectos Peru, Reservados todos los derechos.</p>
 </div>
     
 <script>

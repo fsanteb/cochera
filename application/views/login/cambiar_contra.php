@@ -62,7 +62,7 @@
 
                             </div>
                         </form>                        
-                        <p class="terms-conditions">© 2020 All Rights Reserved. <a href="index.html">CORK</a> is a product of Designreset. <a href="javascript:void(0);">Cookie Preferences</a>, <a href="javascript:void(0);">Privacy</a>, and <a href="javascript:void(0);">Terms</a>.</p>
+                        <p class="terms-conditions">Copyright © 2022 LyF Proyectos Peru, Reservados todos los derechos.</p>
 
                     </div>                    
                 </div>

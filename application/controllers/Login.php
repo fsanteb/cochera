@@ -66,6 +66,10 @@ class Login extends CI_Controller {
 
     }
 
+	public function Recuperar_Password(){
+        $this->load->view('login/recuperar_contra'); 
+    }
+
 
 
 		

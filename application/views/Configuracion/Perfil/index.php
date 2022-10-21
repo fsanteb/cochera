@@ -270,8 +270,9 @@
                 </div>
             </div>
         </div>
-    </div>    
-                      
+        <b><p class="terms-conditions">Copyright © 2022 LyF Proyectos Peru, Reservados todos los derechos.</p>
+
+    </div>             
 <script>
     $(document).ready(function() {
         $("#liconfiguracion").addClass('active');

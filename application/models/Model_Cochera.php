@@ -721,5 +721,20 @@ class Model_Cochera extends CI_Model {
             $this->db->query($sql);
         }
 
+        function update_recupera_contrasenia($dato){
+            $sql = "UPDATE users set  
+                    password_desencriptado='".$dato['pass']."',
+                    usuario_password='".$dato['usuario_password']."',fec_act=NOW(),
+                    user_act=".$dato['id']." where id_usuario=".$dato['id']."";
+            $this->db->query($sql);
+        }
+
+        function valida_correo($dato){ 
+            $sql = "SELECT * FROM users where usuario_email='".$dato['correo']."' and num_doc='".$dato['dni']."' and estado=1";
+            //echo $sql;
+            $query = $this->db->query($sql)->result_Array();
+            return $query;
+        }
+
 
 }
