@@ -26,7 +26,7 @@
                 <div class="form-container">
                     <div class="form-content">
 
-                        <h1 class="">Registrarse</h1>
+                        <h1 class="">Ingresar</h1>
                         <p class="">Inicie sesión en su cuenta para continuar.</p>
                         
                         <form class="text-left" id="frm_login" name="frm_login">
