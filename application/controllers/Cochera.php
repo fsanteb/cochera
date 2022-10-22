@@ -974,13 +974,12 @@ class Cochera extends CI_Controller {
                 $mail->SMTPSecure = 'SSL';         
                 $mail->Port       = 25;
                 $mail->setFrom('sistemas@sistemaslyf.com','Soporte TI - Cochera');
-            
+
                 $mail->addAddress($dato['correo']);
 
-                $mail->Subject = 'Recuperación de contraseña - Cochera';
                 // Establecer el formato de correo electrónico en HTML
                 $mail->isHTML(true);
-                
+                $mail->Subject = 'Recuperación de contraseña - Cochera';
                 $mailContent = $this->load->view('login/recuperacion_mail', $dato, TRUE);
                 $mail->Body= $mailContent;
                 //$mail->attach('/img/firma.jpeg');
